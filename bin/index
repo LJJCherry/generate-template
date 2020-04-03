@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+const program = require('commander');
+const CreateBlock = require('../src/index');
+
+program
+  .description('模版生成')
+  .option('-p, --path <pathUrl>', 'add a path')
+  .option('-r, --remove', 'remove template')
+  .action(function(cmd) {
+    const { path, remove } = cmd;
+    const block = new CreateBlock(path, remove);
+    block.run();
+  });
+
+program.parse(process.argv);
