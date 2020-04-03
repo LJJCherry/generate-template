@@ -8,11 +8,6 @@ const chalk = require("chalk");
 
 const log = console.log;
 
-const templatePath = path.join(
-  __dirname,
-  "template/packages/website",
-  "src/pages"
-);
 const downloadTemplatePath = path.join(__dirname, "template");
 class CreateBlock {
   constructor(path, remove) {
@@ -20,79 +15,57 @@ class CreateBlock {
     this.remove = remove;
   }
 
-  async getAnswers() {
-    let answer = await inquirer.prompt(QUESTIONS);
-    return answer;
-  }
+  // async getAnswers() {
+  //   let answer = await inquirer.prompt(QUESTIONS);
+  //   return answer;
+  // }
 
-  async downloadFromGit() {
+  async downloadFromGit(repository, destination) {
     // 判断文件是否存在，如果文件目录存在会报（git clone failed with status 128）
     return new Promise((resolve, reject) => {
-      if (this.isDirExited(downloadTemplatePath)) {
+      if (this.isDirExited(destination)) {
         log("The template file already exists");
         resolve(true);
       } else {
         const spinner = ora("Downloading template...");
         spinner.start();
-        download(
-          "https://github.com:LJJCherry/create-react-app-template#master",
-          downloadTemplatePath,
-          { clone: true },
-          err => {
-            if (err) {
-              spinner.fail("Failed to download repo " + err.message.trim());
-              return reject(err);
-            }
-            spinner.succeed("lark-pro template downloaded successfully");
-            return resolve(true);
+        download(repository, destination, { clone: true }, err => {
+          if (err) {
+            spinner.fail("Failed to download repo " + err.message.trim());
+            return reject(err);
           }
-        );
+          spinner.succeed("template downloaded successfully");
+          return resolve(true);
+        });
       }
     });
   }
 
-  getTypeDir(type) {
-    const keys = Object.keys(TEMPLATE_TYPE);
-    let dir = "";
-    keys.forEach(key => {
-      if (TEMPLATE_TYPE[key].includes(type)) {
-        dir = key;
-      }
-    });
-    return dir;
-  }
-
+  // 判断目录是否存在
   isDirExited(path) {
     return fse.existsSync(path);
   }
-
-  copyTemplate(name) {
-    let sourcePath = "";
-    const outPath = path.join(this.path, name);
-    if (this.isDirExited(outPath)) {
-      log(chalk.red("this type of template exists, please select another one"));
+  // 拷贝模板
+  copyTemplate(src, desc) {
+    if (this.isDirExited(desc)) {
+      log(chalk.red("this template exists"));
       process.exit();
     }
-    if (name === "Edit") {
-      sourcePath = path.join(templatePath, name);
-    } else {
-      sourcePath = path.join(templatePath, `${this.getTypeDir(name)}/${name}`);
-    }
     fse
-      .ensureDir(outPath)
+      .ensureDir(desc)
       .then(() => {
         log(chalk.green("Template file generated successfully"));
-        fse.copySync(sourcePath, outPath);
+        fse.copySync(src, desc);
       })
       .catch(err => {
         log(chalk.red("Template file generation failed"), err);
       });
   }
-
+  // 移除模板文件
   async removeTemplate(path) {
     return new Promise((resolve, reject) => {
       fse
-        .remove(downloadTemplatePath)
+        .remove(path)
         .then(() => {
           log(chalk.green("Template file delete successfully"));
           resolve();
@@ -106,14 +79,18 @@ class CreateBlock {
   }
 
   async run() {
-    // 1、git clone template; 1、 get answer;  3 copy template
-    // if (this.remove) {
-    //   await this.removeTemplate(downloadTemplatePath)
-    // }
-    const template = await this.downloadFromGit();
+    // 1、git clone template;  2 copy template
+    if (this.remove) {
+      await this.removeTemplate(downloadTemplatePath);
+    }
+    await this.downloadFromGit(
+      "https://github.com:LJJCherry/create-react-app-template#master",
+      downloadTemplatePath
+    );
     // const answers = await this.getAnswers();
     // const { type } = answers;
-    // this.copyTemplate();
+    const desc = path.join(this.path, "test");
+    this.copyTemplate(downloadTemplatePath, desc);
   }
 }
 
