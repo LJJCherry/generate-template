@@ -11,9 +11,8 @@ ljj-generate-template
 
 ```
 npx ljj-generate-template
-
 ```
-
+就会把[项目模板](https://github.com/LJJCherry/create-react-app-template)拷贝到当前目录的新建的test目录下（ps:test是写死的）
 ### 用到的库
 
 - [commander](https://github.com/tj/commander.js)：node.js command-line interfaces made easy。
