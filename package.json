@@ -15,7 +15,7 @@
     "generate"
   ],
   "bin": {
-    "block": "./bin/index"
+    "ljj-generate-template": "./bin/index"
   },
   "author": "ljj",
   "license": "ISC",
