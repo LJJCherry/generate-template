@@ -6,11 +6,14 @@
   从 GitHub, GitLab, Bitbucket 下载一个 git 仓库
 - [chalk](https://github.com/chalk/chalk):Terminal string styling done right。
   用于修改控制台字符串的样式，包括字体样式（加粗），颜色以及背景颜色等。
+
 - [Inquirer](https://github.com/SBoudrias/Inquirer.js): A collection of common interactive command line user interfaces。
   交互式命令行工具
 
-- [fs-extra](adds file system methods that aren't included in the native fs) fs 方法的扩充库
-- [ora](Elegant terminal spinner)
+* [fs-extra](https://github.com/jprichardson/node-fs-extra):adds file system methods that aren't included in the native fs
+  fs 方法的扩充库
+
+* [ora](https://github.com/sindresorhus/ora/blob/master/readme.md): Elegant terminal spinner
 
 ### 常见问题
 
