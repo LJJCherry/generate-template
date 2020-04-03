@@ -1,5 +1,5 @@
 {
-  "name": "generate-template",
+  "name": "ljj-generate-template",
   "version": "1.0.1",
   "description": "模板生成器",
   "main": "./src/index.js",
@@ -29,6 +29,6 @@
     "yargs-parser": "^16.1.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://registry.npmjs.org"
   }
 }

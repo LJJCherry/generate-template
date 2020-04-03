@@ -7,10 +7,9 @@ program
   .option("-p, --path <pathUrl>", "add a path")
   .option("-r, --remove", "remove template")
   .action(function(cmd) {
-    console.log(cmd);
-    // const { path, remove } = cmd;
-    // const block = new CreateBlock(path, remove);
-    // block.run();
+    const { path, remove } = cmd;
+    const block = new CreateBlock(path, remove);
+    block.run();
   });
 
 program.parse(process.argv);
