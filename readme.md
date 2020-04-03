@@ -1,3 +1,19 @@
+### 用法
+
+1、全局安装
+
+```
+npm i ljj-generate-template -g
+ljj-generate-template
+```
+
+2、使用 npx
+
+```
+npx ljj-generate-template
+
+```
+
 ### 用到的库
 
 - [commander](https://github.com/tj/commander.js)：node.js command-line interfaces made easy。
